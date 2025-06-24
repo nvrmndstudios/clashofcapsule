@@ -1,18 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Barrel : MonoBehaviour
+public class Barrel : MonoBehaviour, IBlastListener
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public event Action<GameObject> OnBarrelBlasted;
 
-    // Update is called once per frame
-    void Update()
+    public void OnBlast()
     {
-        
+        OnBarrelBlasted?.Invoke(gameObject);
     }
 }
