@@ -219,6 +219,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  clickParticlePrefab: {fileID: 2458971825218245877, guid: 448bf6febfa6541b7b088b25e6614d48, type: 3}
+  particleRotationEuler: {x: -90, y: 0, z: 0}
 --- !u!114 &5239257748391959339
 MonoBehaviour:
   m_ObjectHideFlags: 0

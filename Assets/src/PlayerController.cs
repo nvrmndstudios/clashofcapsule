@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
             Die();
 
             var blast = gameObject.AddComponent<BlastEffect>();
-            blast.SetValuesManually();
+            blast.SetValuesManually(blastParticle);
             blast.Blast();
         }
     }
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         IsAlive = false;
+        GameManager.Instance.OnPlayerDie();
     }
 
     public Vector3 GetPosition()

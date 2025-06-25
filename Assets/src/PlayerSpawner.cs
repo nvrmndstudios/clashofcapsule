@@ -17,4 +17,9 @@ public class PlayerSpawner : MonoBehaviour
         }
         return _currentPlayer;
     }
+    
+    public PlayerController GetPlayer()
+    {
+        return _currentPlayer;
+    }
 }

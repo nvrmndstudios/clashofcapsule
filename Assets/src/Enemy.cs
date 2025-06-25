@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
 
     private float currentLife;
     
-    public event Action<GameObject> OnEnemyDied;
+    public event Action<GameObject, bool> OnEnemyDied;
 
     [SerializeField] private Image lifeBarFill;  // UI Image (fill) reference
 
@@ -42,11 +42,11 @@ public class Enemy : MonoBehaviour
         currentLife -= lifeDrainRate * Time.deltaTime;
         if (currentLife <= 0f)
         {
-            Destroy(gameObject);
             if (OnEnemyDied != null)
             {
-                OnEnemyDied(gameObject);
+                OnEnemyDied(gameObject, false);
             }
+            Destroy(gameObject);
             return;
         }
 
@@ -64,7 +64,7 @@ public class Enemy : MonoBehaviour
             blastEffect.Blast();
             if (OnEnemyDied != null)
             {
-                OnEnemyDied(gameObject);
+                OnEnemyDied(gameObject, true);
             }
         }
     }

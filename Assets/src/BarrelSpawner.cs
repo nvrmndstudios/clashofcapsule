@@ -18,15 +18,29 @@ public class BarrelSpawner : MonoBehaviour
     public float respawnDelay = 0.3f; // Delay before new spawn (in seconds)
 
     private List<GameObject> activeBarrels = new List<GameObject>();
+    private Coroutine spawnLoopCoroutine;
 
     public void StartGame()
     {
-        StartCoroutine(SpawnBarrelsLoop());
+        if (spawnLoopCoroutine == null)
+            spawnLoopCoroutine = StartCoroutine(SpawnBarrelsLoop());
     }
 
     public void EndGame()
     {
-        StopCoroutine(SpawnBarrelsLoop());
+        if (spawnLoopCoroutine != null)
+        {
+            StopCoroutine(spawnLoopCoroutine);
+            spawnLoopCoroutine = null;
+        }
+
+        // Optional: clean up barrels if needed
+        foreach (var barrel in activeBarrels)
+        {
+            if (barrel != null) Destroy(barrel);
+        }
+
+        activeBarrels.Clear();
     }
 
     private IEnumerator SpawnBarrelsLoop()

@@ -9,7 +9,7 @@ public class BlastEffect : MonoBehaviour
     public float upwardsModifier = 0.4f;
 
     [Header("Visuals")]
-    [SerializeField] private GameObject blastParticle;
+    public GameObject blastParticle;
 
     [Header("Other Settings")]
     public bool addColliderIfMissing = true;
@@ -20,13 +20,14 @@ public class BlastEffect : MonoBehaviour
 
     private bool hasBlasted = false;
 
-    public void SetValuesManually(float exploForce = 10f, float exploRad = 1f, float upwardModifier = 0.1f, bool searchForNear = false, bool addColIfMssng = true)
-    {
-       explosionForce = exploForce;
-       explosionRadius = exploRad;
-       upwardsModifier = upwardModifier;
-       searchNearbyBlasts = searchForNear;
-       addColliderIfMissing = addColIfMssng;
+    public void SetValuesManually(GameObject blastPart,  float exploForce = 10f, float exploRad = 1f, float upwardModifier = 0.1f, bool searchForNear = false, bool addColIfMssng = true)
+    { 
+        blastParticle = blastPart; 
+        explosionForce = exploForce; 
+        explosionRadius = exploRad; 
+        upwardsModifier = upwardModifier; 
+        searchNearbyBlasts = searchForNear; 
+        addColliderIfMissing = addColIfMssng;
     }
 
     public void Blast()

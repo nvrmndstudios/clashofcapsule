@@ -1,5 +1,4 @@
 public static class GameData
 {
-    public static int CurrentScore = 0;
-    public static int CurrentLives = 3;
+    public static int CurrentKillCount = 0;
 }

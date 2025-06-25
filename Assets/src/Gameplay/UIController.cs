@@ -3,29 +3,22 @@ using System.Collections.Generic;
 using MPUIKIT;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIController : MonoBehaviour
 {
    [SerializeField] private Canvas canvas;
-   [SerializeField] private List<GameObject> _winFailPrefabs;
+   [SerializeField] private GameObject killPrefab;
 
 
    private List<GameObject> _generatedClones = new List<GameObject>();
-   public void PlayWinEffect(Transform player)
+   public void OnEnemyDie(Transform enemyPosition)
    {
-      GameObject instance = Instantiate(_winFailPrefabs[0]);
+      GameObject instance = Instantiate(killPrefab);
       _generatedClones.Add(instance);
-      instance.GetComponent<FloatingTextEffect>().Initialize(player.position, canvas);
+      instance.GetComponent<FloatingTextEffect>().Initialize(enemyPosition.position, canvas);
    }
 
-   public void PlayFailEffect(Transform player)
-   {
-      GameObject instance = Instantiate(_winFailPrefabs[1]);
-      _generatedClones.Add(instance);
-      instance.GetComponent<FloatingTextEffect>().Initialize(player.position, canvas);
-   }
-   
-   
     [Header("Screens")]
     public GameObject splashScreen;
     public GameObject menuScreen;
@@ -33,21 +26,18 @@ public class UIController : MonoBehaviour
     public GameObject resultScreen;
 
     [Header("Menu Screen UI")]
-    public TMP_Text highScoreText;
+    public TMP_Text highKillCount;
     public TMP_Text soundTxt;
     // public List<Image> soundSprites;
 
     [Header("Gameplay UI")]
-    public TMP_Text scoreText;
+    public TMP_Text killCountText;
+    
+    public TMP_Text wavesText;
 
-    [Tooltip("Drag 3 life icon GameObjects here")]
-    public GameObject[] lifeIcons; // Should have 3 icons
-
+    
     [Header("Result Screen UI")]
     public TMP_Text finalScoreText;
-
-    [SerializeField] private Color activeColor;
-    [SerializeField] private Color deactiveColor;
 
     // ==============================
     // Screen Visibility Handlers
@@ -102,30 +92,23 @@ public class UIController : MonoBehaviour
     // Menu UI Updates
     // ==============================
 
-    public void UpdateHighScore(int highScore)
+    public void UpdateHighKillCount(int highKillCount)
     {
-        highScoreText.text = $"{highScore}";
+        this.highKillCount.text = $"{highKillCount}";
     }
 
     // ==============================
     // Gameplay UI Updates
     // ==============================
 
-    public void UpdateScore(int score)
+    public void UpdateKillCount(int score)
     {
-        scoreText.text = $"{score}";
+        killCountText.text = $"KILLED {score}";
     }
 
-    public void UpdateLife(int life)
+    public void UpdateWave(int wave)
     {
-        for (int i = 0; i < lifeIcons.Length; i++)
-        {
-            MPImage img = lifeIcons[i].GetComponent<MPImage>();
-            if (img != null)
-            {
-                img.color = i < life ? activeColor : deactiveColor;
-            }
-        }
+        wavesText.text = $"WAVE {wave}";
     }
     // ==============================
     // Result Screen Actions

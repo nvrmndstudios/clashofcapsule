@@ -9,6 +9,8 @@ public class ClickToMoveDirect : MonoBehaviour
     private bool isMoving = false;
 
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private GameObject clickParticlePrefab;
+    [SerializeField] private Vector3 particleRotationEuler = Vector3.zero;
 
     void Update()
     {
@@ -18,6 +20,13 @@ public class ClickToMoveDirect : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundMask))
             {
+                // Instantiate particle at clicked position
+                if (clickParticlePrefab != null)
+                {
+                    Quaternion rotation = Quaternion.Euler(particleRotationEuler);
+                    Instantiate(clickParticlePrefab, hit.point, rotation);
+                }
+
                 // Lock movement to XZ plane
                 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 isMoving = true;

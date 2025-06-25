@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         uiController.ShowOnlyMenu();
 
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
-        uiController.UpdateHighScore(highScore);
+        uiController.UpdateHighKillCount(highScore);
     }
 
     private void ExitMenu()
@@ -128,17 +128,19 @@ public class GameManager : MonoBehaviour
     private void EnterGameplay()
     {
         Debug.Log("Entered Gameplay");
+        GameData.CurrentKillCount = 0;
         gameplayController.StartGame();
         uiController.ShowOnlyGameplay();
         
-        uiController.UpdateScore(GameData.CurrentScore);
-        uiController.UpdateLife(GameData.CurrentLives);
+        uiController.UpdateKillCount(GameData.CurrentKillCount);
+        uiController.UpdateWave(0);
 
         // TODO: Start spawning gameplay elements
     }
 
     private void ExitGameplay()
     {
+        gameplayController.EndGame();
         Debug.Log("Exited Gameplay");
         // TODO: Stop all gameplay activity (spawning, timers, etc.)
     }
@@ -152,7 +154,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Entered Result");
         uiController.ShowOnlyResult();
 
-        int score = GameData.CurrentScore;
+        int score = GameData.CurrentKillCount;
         uiController.SetFinalScore(score);
 
         // Save high score if higher
@@ -164,14 +166,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateLifeAndScore()
-    {
-        uiController.UpdateScore(GameData.CurrentScore);
-        uiController.UpdateLife(GameData.CurrentLives);
-    }
-
     private void ExitResult()
     {
         Debug.Log("Exited Result");
+    }
+
+    public void OnPlayerDie()
+    {
+        StartCoroutine(DelayBeforeResult());
+    }
+
+    public void OnEnemyKill(GameObject enemy)
+    {
+        GameData.CurrentKillCount++;
+        uiController.OnEnemyDie(enemy.transform);
+        uiController.UpdateKillCount(GameData.CurrentKillCount);
+    }
+
+    private IEnumerator DelayBeforeResult()
+    {
+        yield return new WaitForSeconds(1.5f); // Delay in seconds (adjust as needed)
+        EnterResult();
     }
 }
