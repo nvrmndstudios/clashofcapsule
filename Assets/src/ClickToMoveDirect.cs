@@ -24,7 +24,9 @@ public class ClickToMoveDirect : MonoBehaviour
                 if (clickParticlePrefab != null)
                 {
                     Quaternion rotation = Quaternion.Euler(particleRotationEuler);
-                    Instantiate(clickParticlePrefab, hit.point, rotation);
+                    var newPos = hit.point;
+                    newPos.y = 0.8f;
+                    Instantiate(clickParticlePrefab, newPos, rotation);
                 }
 
                 // Lock movement to XZ plane

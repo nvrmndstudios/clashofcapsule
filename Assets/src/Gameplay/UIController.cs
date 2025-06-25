@@ -121,19 +121,19 @@ public class UIController : MonoBehaviour
 
     public void OnClickRestart()
     {
-      //  SoundManager.Instance.PlayClick();
+        SoundManager.Instance.PlayClick();
         GameManager.Instance.ChangeState(GameManager.GameState.Gameplay);
     }
 
     public void OnClickHome()
     {
-     //   SoundManager.Instance.PlayClick();
+        SoundManager.Instance.PlayClick();
         GameManager.Instance.ChangeState(GameManager.GameState.Menu);
     }
 
     public void ToggleSound()
     {
-     //   bool isSoundOn = SoundManager.Instance.ToggleSound();
-       // soundTxt.text = !isSoundOn ? "SOUND OFF" : "SOUND ON";
+       bool isSoundOn = SoundManager.Instance.ToggleSound();
+       soundTxt.text = !isSoundOn ? "SOUND OFF" : "SOUND ON";
     } 
 }
