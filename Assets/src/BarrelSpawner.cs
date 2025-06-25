@@ -19,9 +19,14 @@ public class BarrelSpawner : MonoBehaviour
 
     private List<GameObject> activeBarrels = new List<GameObject>();
 
-    private void Start()
+    public void StartGame()
     {
         StartCoroutine(SpawnBarrelsLoop());
+    }
+
+    public void EndGame()
+    {
+        StopCoroutine(SpawnBarrelsLoop());
     }
 
     private IEnumerator SpawnBarrelsLoop()

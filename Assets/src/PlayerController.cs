@@ -3,13 +3,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool IsAlive
-    {
-        get;
-        private set;
-    }
-
     [SerializeField] private GameObject blastParticle;
+    public bool IsAlive { get; private set; }
 
     private void Awake()
     {
@@ -22,6 +17,10 @@ public class PlayerController : MonoBehaviour
         {
             blastEffect.Blast();
             Die();
+
+            var blast = gameObject.AddComponent<BlastEffect>();
+            blast.SetValuesManually();
+            blast.Blast();
         }
     }
 

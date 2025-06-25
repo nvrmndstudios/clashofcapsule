@@ -7,6 +7,7 @@ public class GameplayController : MonoBehaviour
 {
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private BarrelSpawner _barrelSpawner;
+    [SerializeField] private PlayerSpawner _playerSpawner;
 
     private void Start()
     {
@@ -20,11 +21,14 @@ public class GameplayController : MonoBehaviour
 
     public void StartGame()
     {
-        
+        _enemySpawner.IsGamePlaying = true;
+        _playerSpawner.SpawnPlayer();
+        _barrelSpawner.StartGame();
     }
 
     public void EndGame()
     {
-        
+        _enemySpawner.IsGamePlaying = false;
+        _barrelSpawner.EndGame();
     }
 }

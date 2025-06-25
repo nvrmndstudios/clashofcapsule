@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Serialization;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -22,11 +24,16 @@ public class EnemySpawner : MonoBehaviour
 
     private List<GameObject> aliveEnemies = new List<GameObject>();
 
+    public bool IsGamePlaying = false;
+
     private void Update()
     {
-        if (!spawningWave && enemiesRemaining == 0)
+        if (IsGamePlaying)
         {
-            StartCoroutine(SpawnWave());
+            if (!spawningWave && enemiesRemaining == 0)
+            {
+                StartCoroutine(SpawnWave());
+            }
         }
     }
 
@@ -52,6 +59,11 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if (!IsGamePlaying)
+        {
+            return;
+        }
+
         if (enemyPrefab == null || player == null || spawnPoints.Length == 0) return;
 
         Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];

@@ -8,11 +8,6 @@ public class BlastEffect : MonoBehaviour
     public float explosionRadius = 5f;
     public float upwardsModifier = 0.4f;
 
-    [Header("Cleanup Settings")]
-    public float sleepCheckDelay = 2f;
-    public float sinkSpeed = 1f;
-    public float sinkDestroyDelay = 3f;
-
     [Header("Visuals")]
     [SerializeField] private GameObject blastParticle;
 
@@ -24,6 +19,15 @@ public class BlastEffect : MonoBehaviour
     public float blastChainRadius = 8f;
 
     private bool hasBlasted = false;
+
+    public void SetValuesManually(float exploForce = 10f, float exploRad = 1f, float upwardModifier = 0.1f, bool searchForNear = false, bool addColIfMssng = true)
+    {
+       explosionForce = exploForce;
+       explosionRadius = exploRad;
+       upwardsModifier = upwardModifier;
+       searchNearbyBlasts = searchForNear;
+       addColliderIfMissing = addColIfMssng;
+    }
 
     public void Blast()
     {
